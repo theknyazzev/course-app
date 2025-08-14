@@ -1,0 +1,654 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="csrf-token" content="{{ csrf_token }}">
+    <title>ks study</title>
+    <link href="https://vjs.zencdn.net/7.20.3/video-js.css" rel="stylesheet">
+    <link rel="stylesheet" href="/static/style.css">
+</head>
+<body>
+    <div id="main-view" class="app-content view">
+        <div class="search-container">
+            <input type="text" class="search-input" placeholder="Поиск..." onclick="openSearch()">
+        </div>
+
+        <h2>ЧТО ТЫ ХОЧЕШЬ ЗАМАНЬЯЧИТЬ?</h2>
+
+        <div class="progress-section">
+            <div class="progress-grid">
+                <!-- Первый ряд -->
+                <div class="progress-card" onclick="showVideos('html')">
+                    <div class="progress-title">HTML + CSS</div>
+                    <div class="progress-bar-container">
+                        <div class="progress-text">
+                            <span class="progress-label">Прогресс</span>
+                            <span class="progress-percent">0%</span>
+                        </div>
+                        <div class="progress-bar">
+                            <div class="progress-fill" id="html-progress"></div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="progress-card" onclick="showVideos('js')">
+                    <div class="progress-title">JavaScript</div>
+                    <div class="progress-bar-container">
+                        <div class="progress-text">
+                            <span class="progress-label">Прогресс</span>
+                            <span class="progress-percent">0%</span>
+                        </div>
+                        <div class="progress-bar">
+                            <div class="progress-fill" id="js-progress"></div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Второй ряд -->
+                <div class="progress-card" onclick="showVideos('php')">
+                    <div class="progress-title">PHP</div>
+                    <div class="progress-bar-container">
+                        <div class="progress-text">
+                            <span class="progress-label">Прогресс</span>
+                            <span class="progress-percent">0%</span>
+                        </div>
+                        <div class="progress-bar">
+                            <div class="progress-fill" id="php-progress"></div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="progress-card" onclick="showVideos('wordpress')">
+                    <div class="progress-title">WordPress</div>
+                    <div class="progress-bar-container">
+                        <div class="progress-text">
+                            <span class="progress-label">Прогресс</span>
+                            <span class="progress-percent">0%</span>
+                        </div>
+                        <div class="progress-bar">
+                            <div class="progress-fill" id="wp-progress"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Календарь -->
+        <div class="calendar-container" id="calendar-container">
+            <div class="calendar-content" id="calendar-content">
+                <div class="calendar-header">
+                    <div class="calendar-nav">
+                        <button class="calendar-nav-button" onclick="changeMonth(-1)">←</button>
+                        <button class="calendar-nav-button" onclick="changeMonth(1)">→</button>
+                    </div>
+                    <div>
+                        <span class="calendar-month" id="current-month"></span>
+                        <span class="calendar-year" id="current-year"></span>
+                    </div>
+                </div>
+                <div class="calendar-grid" id="calendar-weekdays"></div>
+                <div class="calendar-grid" id="calendar-days"></div>
+            </div>
+            <div class="calendar-swipe-area" id="swipe-area"></div>
+        </div>
+
+        <div class="divider"></div>
+
+        <h2>НЕДАВНЕЕ НА КАНАЛЕ:</h2>
+        <div class="tag-filter">
+            <div class="tag active" onclick="filterVideos('all')">Все</div>
+            <div class="tag" onclick="filterVideos('html')">HTML + CSS</div>
+            <div class="tag" onclick="filterVideos('js')">JavaScript</div>
+            <div class="tag" onclick="filterVideos('php')">PHP</div>
+            <div class="tag" onclick="filterVideos('wordpress')">WordPress</div>
+        </div>
+
+                <!-- Несколько последних видео (до 5) -->
+        <div class="recent-videos-container">
+            <!-- Видео будут загружаться динамически с помощью JavaScript -->
+        </div>
+    </div>
+
+    <!-- Видео разделы - будут заполняться из админки -->
+    <div id="videos-html" class="app-content hidden">
+        <div class="back-button" onclick="hideVideos()">
+          <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+            <path d="M15.41 7.41L14 6l-6 6 6 6 1.41-1.41L10.83 12z"/>
+          </svg>
+          <span>Назад</span>
+        </div>
+        <h2>HTML + CSS</h2>
+        
+        <div class="video-grid">
+            <!-- Видео будут загружены динамически -->
+            <div class="loading-placeholder">Загрузка видео...</div>
+        </div>
+    </div>
+
+    <div id="videos-js" class="app-content hidden">
+        <div class="back-button" onclick="hideVideos()">
+          <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+            <path d="M15.41 7.41L14 6l-6 6 6 6 1.41-1.41L10.83 12z"/>
+          </svg>
+          <span>Назад</span>
+        </div>
+        <h2>JavaScript</h2>
+        <div class="video-grid">
+            <div class="loading-placeholder">Загрузка видео...</div>
+        </div>
+    </div>
+
+    <div id="videos-php" class="app-content hidden">
+        <div class="back-button" onclick="hideVideos()">
+          <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+            <path d="M15.41 7.41L14 6l-6 6 6 6 1.41-1.41L10.83 12z"/>
+          </svg>
+          <span>Назад</span>
+        </div>
+        <h2>PHP</h2>
+        <div class="video-grid">
+            <div class="loading-placeholder">Загрузка видео...</div>
+        </div>
+    </div>
+
+    <div id="videos-wordpress" class="app-content hidden">
+        <div class="back-button" onclick="hideVideos()">
+          <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+            <path d="M15.41 7.41L14 6l-6 6 6 6 1.41-1.41L10.83 12z"/>
+          </svg>
+          <span>Назад</span>
+        </div>
+        <h2>WordPress</h2>
+        <div class="video-grid">
+            <div class="loading-placeholder">Загрузка видео...</div>
+        </div>
+    </div>
+
+    <!-- Страница просмотра видео -->
+    <div id="video-page" class="app-content hidden video-view">
+      <div class="back-button" onclick="hideVideoPage()">
+        <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+          <path d="M15.41 7.41L14 6l-6 6 6 6 1.41-1.41L10.83 12z"/>
+        </svg>
+        <span>Назад</span>
+      </div>
+      
+      <!-- прямоугольник-плейсхолдер с превью -->
+      <div class="video-placeholder"></div>
+      <div class="video-info">
+        <div class="video-description-container">
+          <h1 class="video-title" id="video-title">Название видео</h1>
+          <div class="video-stats">
+            <span id="video-views">0 просмотров</span>
+            <span id="video-date">сегодня</span>
+          </div>
+          <div class="video-description" id="video-description">
+            Описание видео загружается...
+          </div>
+        </div>
+        <button id="watch-button" class="watch-button">Смотреть</button>
+      </div>
+    </div>
+
+    <!-- Другие экраны приложения -->
+    <div id="community-view" class="app-content hidden">
+      <h1>Сообщество</h1>
+      <div class="community-cards">
+        <div class="community-card" onclick="openRules()">
+          <span>Правила сообщества</span>
+          <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+              <path d="M15.41 7.41L14 6l-6 6 6 6 1.41-1.41L10.83 12z"/>
+          </svg>
+        </div>
+        <!-- Добавили onclick -->
+        <div class="community-card" onclick="openFaq()">
+          <span>Ответы на вопросы</span>
+          <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+              <path d="M15.41 7.41L14 6l-6 6 6 6 1.41-1.41L10.83 12z"/>
+          </svg>
+        </div>
+        <div class="community-card">
+          <div class="support-content">
+              <span>Обратиться в службу поддержки</span>
+              <div class="support-divider"></div>
+              <p class="support-hours">Работаем с пн – пт по 19.00 по мск</p>
+          </div>
+          <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+              <path d="M15.41 7.41L14 6l-6 6 6 6 1.41-1.41L10.83 12z"/>
+          </svg>
+        </div>
+      </div>
+    </div>
+
+    <div id="rules-view" class="app-content hidden">
+      <div class="back-button" onclick="hideRules()">
+        <svg viewBox="0 0 24 24"><path d="M15.41 7.41L14 6l-6 6 6 6 1.41-1.41L10.83 12z"/></svg>
+        <span>Назад</span>
+      </div>
+      <h1>Правила сообщества</h1>
+
+      <div class="faq-item">
+        <div class="question" onclick="toggleAnswer(this)">
+          <div class="question-title">
+            <span class="question-badge">1</span>
+            Не спамить
+          </div>
+          <svg class="faq-arrow" viewBox="0 0 24 24"><path d="M15.41 7.41L14 6l-6 6 6 6 1.41-1.41L10.83 12z"/></svg>
+        </div>
+        <div class="answer hidden">
+          Запрещено размещать рекламу и повторные сообщения без смысла.
+        </div>
+      </div>
+
+      <div class="faq-item">
+        <div class="question" onclick="toggleAnswer(this)">
+          <div class="question-title">
+            <span class="question-badge">2</span>
+            Быть вежливым
+          </div>
+          <svg class="faq-arrow" viewBox="0 0 24 24"><path d="M15.41 7.41L14 6l-6 6 6 6 1.41-1.41L10.83 12z"/></svg>
+        </div>
+        <div class="answer hidden">
+          Оскорбления и грубость недопустимы.
+        </div>
+      </div>
+
+      <!-- …другие правила… -->
+    </div>
+
+    <!-- Новая страница "Вопросы и ответы" -->
+    <div id="faq-view" class="app-content hidden">
+      <div class="back-button" onclick="hideFaq()">
+        <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+          <path d="M15.41 7.41L14 6l-6 6 6 6 1.41-1.41L10.83 12z"/>
+        </svg>
+        <span>Назад</span>
+      </div>
+      <h1>Вопросы и ответы</h1>
+
+      <div class="faq-item">
+        <div class="question" onclick="toggleAnswer(this)">
+          <div class="question-title">
+            <span class="question-badge">1</span>
+            Как работает приложение?
+          </div>
+          <svg class="faq-arrow" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+            <path d="M15.41 7.41L14 6l-6 6 6 6 1.41-1.41L10.83 12z"/>
+          </svg>
+        </div>
+        <div class="answer hidden">
+          Приложение показывает список видео и позволяет…
+        </div>
+      </div>
+
+      <div class="faq-item">
+        <div class="question" onclick="toggleAnswer(this)">
+          <div class="question-title">
+            <span class="question-badge">2</span>
+            Как сохранить в избранное?
+          </div>
+          <svg class="faq-arrow" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+            <path d="M15.41 7.41L14 6l-6 6 6 6 1.41-1.41L10.83 12z"/>
+          </svg>
+        </div>
+        <div class="answer hidden">
+          Нажмите на сердечко в углу превью, чтобы добавить…
+        </div>
+      </div>
+
+      <!-- …other items… -->
+    </div>
+
+    <div id="favorites-view" class="app-content hidden">
+        <h1>Избранное</h1>
+        <div class="favorites-content">
+            <div class="no-favorites">
+                <div style="font-size: 48px; margin-bottom: 16px; opacity: 0.3;">💖</div>
+                <div style="font-size: 18px; margin-bottom: 8px; opacity: 0.8;">Нет избранных видео</div>
+                <div style="font-size: 14px; opacity: 0.6;">Добавьте видео в избранное, нажав на ❤️</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- вместо profile-view: чаты -->
+    <div id="chats-view" class="app-content hidden">
+      <h1>Чаты</h1>
+      <div class="community-card chat-card" onclick="openGptChat()">
+        <!-- вместо <img> -->
+        <div class="chat-avatar">🤖</div>
+        <div class="chat-info">
+          <div class="chat-title">AI Помощник</div>
+          <div class="chat-description">Задайте любой вопрос</div>
+        </div>
+        <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+            <path d="M15.41 7.41L14 6l-6 6 6 6 1.41-1.41L10.83 12z"/>
+        </svg>
+      </div>
+      <div class="community-card chat-card">
+        <!-- вместо <img> -->
+        <div class="chat-avatar"></div>
+        <div class="chat-info">
+          <div class="chat-title">ks study</div>
+          <div class="chat-description">основной чат</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- GPT Chat View -->
+    <div id="gpt-chat-view" class="app-content hidden">
+        <div class="back-button chat-back-button" onclick="closeGptChat()">
+            <svg viewBox="0 0 24 24"><path d="M15.41 7.41L14 6l-6 6 6 6 1.41-1.41L10.83 12z"/></svg>
+            <span>🤖 AI Помощник</span>
+        </div>
+        
+        <div class="chat-container">
+            <div class="chat-header">
+                <div class="chat-actions">
+                    <button class="chat-clear-btn" id="chat-clear-btn">Очистить</button>
+                </div>
+            </div>
+            
+            <div class="chat-messages" id="chat-messages">
+                <div class="chat-empty">
+                    <div class="chat-empty-icon">🤖</div>
+                    <div class="chat-empty-text">Привет! Я ваш AI помощник</div>
+                    <div class="chat-empty-subtitle">Задайте мне любой вопрос</div>
+                </div>
+            </div>
+            
+            <div class="chat-input-container">
+                <div class="chat-input-wrapper">
+                    <textarea 
+                        id="chat-input" 
+                        class="chat-input" 
+                        placeholder="Введите ваш вопрос..."
+                        rows="1"
+                    ></textarea>
+                    <button id="chat-send-btn" class="chat-send-btn">
+                        ➤
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Модальное окно поиска -->
+    <div id="search-modal" class="app-content hidden">
+        <div class="search-header">
+            <button class="close-search" onclick="closeSearch()">
+                <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/>
+                </svg>
+            </button>
+            <input type="text" class="search-input-modal" placeholder="Поиск видео..." autofocus>
+        </div>
+        
+        <div class="search-tabs">
+            <div class="search-tab active" onclick="setSearchTab('all')">Все</div>
+            <div class="search-tab" onclick="setSearchTab('html')">HTML + CSS</div>
+            <div class="search-tab" onclick="setSearchTab('js')">JavaScript</div>
+            <div class="search-tab" onclick="setSearchTab('php')">PHP</div>
+            <div class="search-tab" onclick="setSearchTab('wordpress')">WordPress</div>
+        </div>
+        
+        <div class="search-results">
+            <div class="search-sorting">
+                <span class="sort-option active" onclick="setSearchSort('new')">Сначала новые ▼</span>
+                <span class="sort-option" onclick="setSearchSort('old')">Сначала старые ▼</span>
+            </div>
+            
+            <div class="search-items">
+                <!-- Результаты поиска будут здесь -->
+                <div class="no-results">Введите запрос для поиска</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Нижняя панель навигации -->
+    <div class="tab-bar">
+      <div class="tab active" onclick="switchTab('main')">Главная</div>
+      <div class="tab" onclick="switchTab('community')">Сообщество</div>
+      <div class="tab" onclick="switchTab('favorites')">Избранное</div>
+      <div class="tab" onclick="switchTab('chats')">Чаты</div>
+    </div>
+
+    <script src="https://vjs.zencdn.net/7.20.3/video.min.js"></script>
+    <script src="/static/websocket-manager.js"></script>
+    <script src="/static/gpt-chat.js"></script>
+    <script src="/static/script.js"></script>
+    
+    <script>
+    // Дополнительные функции для поиска (не изменяя основной script.js)
+    function setSearchTab(tab) {
+        currentSearchTab = tab;
+        document.querySelectorAll('.search-tab').forEach(el => {
+            el.classList.remove('active');
+            if (el.textContent.toLowerCase().includes(tab) || (tab === 'all' && el.textContent.toLowerCase() === 'все')) {
+                el.classList.add('active');
+            }
+        });
+        updateSearchResults();
+    }
+
+    function setSearchSort(sort) {
+        currentSearchSort = sort;
+        document.querySelectorAll('.sort-option').forEach(el => {
+            el.classList.remove('active');
+        });
+        event.target.classList.add('active');
+        updateSearchResults();
+    }
+
+    function setupSearchInput() {
+        const searchInputModal = document.querySelector('.search-input-modal');
+        if (searchInputModal) {
+            searchInputModal.addEventListener('input', function() {
+                updateSearchResults();
+            });
+        }
+    }
+
+    function initializeTagFilter() {
+        // Инициализация тегов после загрузки видео
+        console.log('Теги инициализированы');
+    }
+
+    function toggleAnswer(questionElement) {
+        const answer = questionElement.nextElementSibling;
+        const arrow = questionElement.querySelector('.faq-arrow');
+        
+        if (answer && answer.classList.contains('answer')) {
+            if (answer.classList.contains('hidden')) {
+                answer.classList.remove('hidden');
+                arrow.classList.add('open');
+                questionElement.classList.add('active');
+            } else {
+                answer.classList.add('hidden');
+                arrow.classList.remove('open');
+                questionElement.classList.remove('active');
+            }
+        }
+    }
+
+    // НОВЫЕ ФУНКЦИИ ДЛЯ ИЗБРАННОГО
+    
+    // Переключение избранного (улучшенная версия)
+    async function toggleFavoriteEnhanced(videoId, event) {
+        event.stopPropagation();
+        const star = event.target;
+        
+        const videoIdStr = videoId.toString();
+        
+        // Добавляем анимацию
+        star.classList.add('adding');
+        setTimeout(() => star.classList.remove('adding'), 600);
+        
+        // Обновляем локальное состояние
+        if (favoriteVideos.includes(videoIdStr)) {
+            favoriteVideos = favoriteVideos.filter(id => id !== videoIdStr);
+            star.classList.remove('active');
+            star.textContent = '❤';
+            console.log(`Видео ${videoId} удалено из избранного`);
+        } else {
+            favoriteVideos.push(videoIdStr);
+            star.classList.add('active');
+            star.textContent = '❤';
+            console.log(`Видео ${videoId} добавлено в избранное`);
+        }
+        
+        // Сохраняем в localStorage
+        localStorage.setItem('favorites', JSON.stringify(favoriteVideos));
+        
+        // Если мы на странице избранного, обновляем её
+        if (currentPage === 'favorites') {
+            displayFavoriteVideos();
+        }
+        
+        // Отправляем на сервер (если доступен)
+        try {
+            const response = await fetch(`${API_BASE}/favorites/toggle/`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'X-CSRFToken': getCsrfToken()
+                },
+                body: JSON.stringify({
+                    video_id: videoId
+                })
+            });
+            
+            if (response.ok) {
+                const result = await response.json();
+                console.log('Статус избранного синхронизирован с сервером:', result);
+            }
+        } catch (error) {
+            console.log('Не удалось синхронизировать избранное с сервером:', error);
+        }
+    }
+
+    // Отображение избранных видео
+    function displayFavoriteVideos() {
+        const favoritesContent = document.querySelector('.favorites-content');
+        if (!favoritesContent) return;
+        
+        const favoriteVideosList = [];
+        const addedVideoIds = new Set(); // Для отслеживания уже добавленных видео
+        
+        console.log('Текущие категории в loadedVideos:', Object.keys(loadedVideos));
+        console.log('Избранные видео IDs:', favoriteVideos);
+        
+        // Собираем избранные видео из всех загруженных категорий
+        for (const category in loadedVideos) {
+            const videos = loadedVideos[category] || [];
+            console.log(`Категория ${category}:`, videos.length, 'видео');
+            
+            videos.forEach(video => {
+                const videoIdStr = video.id.toString();
+                console.log(`Проверяем видео ${videoIdStr} в категории ${category}`);
+                
+                if (favoriteVideos.includes(videoIdStr) && !addedVideoIds.has(videoIdStr)) {
+                    console.log(`Добавляем видео ${videoIdStr} из категории ${category}`);
+                    favoriteVideosList.push({
+                        ...video,
+                        categoryName: getCategoryDisplayName(category)
+                    });
+                    addedVideoIds.add(videoIdStr); // Отмечаем как добавленное
+                } else if (favoriteVideos.includes(videoIdStr) && addedVideoIds.has(videoIdStr)) {
+                    console.log(`Видео ${videoIdStr} уже добавлено, пропускаем`);
+                }
+            });
+        }
+        
+        console.log('Итого уникальных избранных видео:', favoriteVideosList.length);
+        console.log('Добавленные ID видео:', Array.from(addedVideoIds));
+        
+        if (favoriteVideosList.length === 0) {
+            favoritesContent.innerHTML = `
+                <div class="no-favorites">
+                    <div style="font-size: 48px; margin-bottom: 16px; opacity: 0.3;">💖</div>
+                    <div style="font-size: 18px; margin-bottom: 8px; opacity: 0.8;">Нет избранных видео</div>
+                    <div style="font-size: 14px; opacity: 0.6;">Добавьте видео в избранное, нажав на ❤️</div>
+                </div>
+            `;
+            return;
+        }
+        
+        // Создаем статистику
+        const statsHtml = `
+            <div class="favorites-stats">
+                <h3>Избранных видео: ${favoriteVideosList.length}</h3>
+                <p>Видео сохранены в вашей личной коллекции</p>
+            </div>
+        `;
+        
+        // Создаем сетку видео
+        const videosHtml = favoriteVideosList.map(video => `
+            <div class="video-thumbnail" onclick="openVideoPage('${video.id}', ${JSON.stringify(video).replace(/"/g, '&quot;')})">
+                <span class="favorite-star active" data-video-id="${video.id}" onclick="toggleFavoriteEnhanced('${video.id}', event)">❤</span>
+                <img src="${video.preview_image || `https://via.placeholder.com/300x169?text=${encodeURIComponent(video.title)}`}" 
+                     alt="${video.title}"
+                     onerror="this.src='https://via.placeholder.com/300x169?text=Видео'">
+                <div class="video-info">
+                    <h3>${video.title}</h3>
+                    <p>${video.description ? (video.description.length > 60 ? video.description.substring(0, 60) + '...' : video.description) : ''}</p>
+                    <div class="video-category-tag">${video.categoryName}</div>
+                </div>
+            </div>
+        `).join('');
+        
+        favoritesContent.innerHTML = `
+            ${statsHtml}
+            <div class="favorites-grid">
+                ${videosHtml}
+            </div>
+        `;
+        
+        // Обновляем состояние звездочек
+        updateFavoriteStars();
+    }
+
+    // Получение отображаемого имени категории
+    function getCategoryDisplayName(category) {
+        const categoryNames = {
+            'html_css': 'HTML + CSS',
+            'html': 'HTML + CSS',
+            'javascript': 'JavaScript',
+            'js': 'JavaScript',
+            'php': 'PHP',
+            'wordpress': 'WordPress'
+        };
+        return categoryNames[category] || category;
+    }
+
+    // Переопределяем toggleFavorite глобально
+    window.toggleFavorite = toggleFavoriteEnhanced;
+    
+    // Переопределяем switchTab для обработки избранного
+    const originalSwitchTab = window.switchTab;
+    window.switchTab = function(tabName) {
+        if (tabName === 'favorites') {
+            currentPage = tabName;
+            currentCategory = null;
+            
+            hideAllViews();
+
+            const viewId = `${tabName}-view`;
+            const targetView = document.getElementById(viewId);
+            if (targetView) {
+                targetView.classList.add('view');
+                targetView.classList.remove('hidden');
+                
+                // Загружаем и отображаем избранные видео
+                displayFavoriteVideos();
+            }
+
+            setActiveTab(tabName);
+        } else {
+            // Вызываем оригинальную функцию для остальных вкладок
+            originalSwitchTab(tabName);
+        }
+    };
+    </script>
+</body>
+</html>

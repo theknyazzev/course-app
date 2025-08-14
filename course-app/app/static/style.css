@@ -1,0 +1,1912 @@
+:root {
+    --bg-color: #161616;
+    --panel-color: #1e1e1e;
+    --text-color: #f5f5f5;
+    --accent-color: #9D1D1D;
+    --hover-color: #2a2a2a;
+    --progress-color: #9D1D1D;
+    --border-color: #2a2a2a;
+    --tabbar-height: 62px;
+    --button-color: #252525;
+    --button-hover: #353535;
+    --button-active: #454545;
+    --search-color: #252525;
+    --calendar-day: #333;
+    --calendar-today: #9D1D1D;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+}
+
+
+body {
+    background-color: var(--bg-color);
+    color: var(--text-color);
+    min-height: 100vh;
+    min-height: 100dvh;
+    height: 100vh;
+    height: 100dvh;
+    padding: 0;
+    position: relative;
+    overflow-x: hidden;
+}
+
+.app-content {
+    display: flex;
+    flex-direction: column;
+    min-height: calc(100vh - var(--tabbar-height));
+    min-height: calc(100dvh - var(--tabbar-height));
+    box-sizing: border-box;
+    padding: 20px;
+    padding-bottom: 24px;
+    max-width: 600px;
+    margin: 0 auto;
+}
+
+h1,
+h2,
+h3 {
+    font-weight: 600;
+    margin-bottom: 16px;
+}
+
+h1 {
+    font-size: 24px;
+    margin-bottom: 24px;
+    letter-spacing: -0.5px;
+}
+
+h2 {
+    font-size: 18px;
+    opacity: 0.95;
+    margin-top: 24px;
+    letter-spacing: -0.3px;
+}
+
+.search-container {
+    margin: 16px 0;
+    position: relative;
+}
+
+.search-input {
+    width: 100%;
+    padding: 14px 16px;
+    background-color: var(--search-color);
+    border: 1px solid var(--border-color);
+    border-radius: 12px;
+    color: var(--text-color);
+    font-size: 16px;
+    outline: none;
+    transition: all 0.3s ease;
+}
+
+.search-input:focus {
+    border-color: var(--accent-color);
+    box-shadow: 0 0 0 2px rgba(157, 29, 29, 0.2);
+}
+
+.search-input::placeholder {
+    color: #666;
+}
+
+.progress-section {
+    margin: 24px 0;
+}
+
+.progress-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+}
+
+.progress-card {
+    background-color: var(--panel-color);
+    border-radius: 12px;
+    padding: 16px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    border: 1px solid var(--border-color);
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.progress-card:hover {
+    background-color: var(--hover-color);
+    transform: translateY(-3px);
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+    border-color: var(--accent-color);
+}
+
+.progress-title {
+    font-weight: 600;
+    margin-bottom: 12px;
+    font-size: 16px;
+}
+
+.progress-bar-container {
+    margin-top: 12px;
+}
+
+.progress-bar {
+    height: 8px;
+    background-color: var(--border-color);
+    border-radius: 4px;
+    margin-top: 8px;
+    overflow: hidden;
+    position: relative;
+}
+
+.progress-fill {
+    height: 100%;
+    width: 0%;
+    background: linear-gradient(90deg, var(--progress-color), #c0392b);
+    border-radius: 4px;
+    transition: width 0.8s ease-out;
+}
+
+.progress-text {
+    font-size: 13px;
+    opacity: 0.8;
+    margin-top: 6px;
+    display: flex;
+    justify-content: space-between;
+}
+
+.progress-label {
+    font-weight: 500;
+}
+
+.progress-percent {
+    font-weight: 600;
+}
+
+/* Календарь */
+.calendar-container {
+    background-color: var(--panel-color);
+    border-radius: 12px;
+    padding: 16px;
+    margin-top: 24px;
+    border: 1px solid var(--border-color);
+    position: relative;
+    overflow: hidden;
+    touch-action: pan-y;
+}
+
+.calendar-content {
+    position: relative;
+    transition: transform 0.3s ease;
+}
+
+.calendar-swipe-area {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    z-index: 5;
+}
+
+.calendar-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 16px;
+}
+
+.calendar-nav {
+    display: flex;
+    gap: 10px;
+}
+
+.calendar-nav-button {
+    background: var(--button-color);
+    border: 1px solid var(--border-color);
+    border-radius: 6px;
+    padding: 4px 8px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    color: var(--text-color);
+}
+
+.calendar-nav-button:hover {
+    background: var(--button-hover);
+    border-color: var(--accent-color);
+}
+
+.calendar-month {
+    font-weight: 600;
+    font-size: 16px;
+}
+
+.calendar-year {
+    opacity: 0.8;
+}
+
+.calendar-grid {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    gap: 8px;
+    text-align: center;
+}
+
+.calendar-weekday {
+    font-size: 12px;
+    opacity: 0.6;
+    padding: 4px 0;
+}
+
+.calendar-day {
+    padding: 8px 0;
+    border-radius: 6px;
+    transition: all 0.2s ease;
+}
+
+.calendar-day.empty {
+    visibility: hidden;
+}
+
+.calendar-day.today {
+    background-color: var(--calendar-today);
+    color: white;
+    font-weight: 600;
+}
+
+.calendar-day:hover:not(.empty) {
+    background-color: var(--hover-color);
+}
+
+.divider {
+    height: 1px;
+    background-color: var(--border-color);
+    margin: 24px 0;
+    opacity: 0.3;
+}
+
+.tag-filter {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 18px;
+    overflow-x: auto;
+    padding-bottom: 10px;
+    scrollbar-width: none;
+}
+
+.tag-filter::-webkit-scrollbar {
+    display: none;
+}
+
+.tag {
+    padding: 8px 14px;
+    background-color: var(--panel-color);
+    border-radius: 20px;
+    font-size: 14px;
+    cursor: pointer;
+    white-space: nowrap;
+    border: 1px solid var(--border-color);
+    transition: all 0.25s ease;
+    flex-shrink: 0;
+}
+
+.tag:hover {
+    background-color: var(--hover-color);
+}
+
+.tag.active {
+    background-color: var(--accent-color);
+    border-color: var(--accent-color);
+    color: white;
+    font-weight: 500;
+}
+
+.video-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 14px;
+    margin-top: 18px;
+}
+
+.video-thumbnail {
+    position: relative;
+    aspect-ratio: 16/9;
+    background-color: var(--panel-color);
+    border-radius: 12px;
+    display: flex;
+    flex-direction: column;
+    cursor: pointer;
+    overflow: hidden;
+    border: 1px solid var(--border-color);
+    transition: all 0.3s ease;
+}
+
+.video-thumbnail:hover {
+    transform: scale(1.03);
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+    border-color: var(--accent-color);
+}
+
+.video-thumbnail img {
+    width: 100%;
+    height: 60%;
+    object-fit: cover;
+    border-radius: 12px 12px 0 0;
+}
+
+.video-info {
+    padding: 12px;
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+}
+
+.video-info h3 {
+    font-size: 14px;
+    font-weight: 600;
+    margin: 0 0 8px 0;
+    line-height: 1.3;
+    color: var(--text-color);
+}
+
+.video-info p {
+    font-size: 12px;
+    opacity: 0.8;
+    line-height: 1.4;
+    margin: 0;
+    flex: 1;
+}
+
+/* Overlay для главного видео */
+.video-overlay {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background: linear-gradient(transparent, rgba(0,0,0,0.8));
+    padding: 20px;
+    color: white;
+}
+
+.video-overlay h3 {
+    margin: 0 0 8px 0;
+    font-size: 16px;
+    font-weight: 600;
+    line-height: 1.3;
+}
+
+.video-overlay .video-category {
+    margin: 0;
+    font-size: 13px;
+    opacity: 0.8;
+    color: var(--accent-color);
+    font-weight: 500;
+}
+
+/* Улучшения для placeholder видео на главной */
+.video-placeholder {
+    width: 100%;
+    aspect-ratio: 16/9;
+    background-color: var(--panel-color);
+    border-radius: 12px;
+    margin-bottom: 16px;
+    background-size: cover;
+    background-position: center;
+    border: 1px solid var(--border-color);
+    position: relative;
+}
+
+/* Стили для большого видео-плейсхолдера на главной */
+.recent-video-placeholder {
+    width: 100%;
+    aspect-ratio: 16/9;
+    background-color: var(--panel-color);
+    border-radius: 12px;
+    margin-top: 16px;
+    cursor: pointer;
+    border: 1px solid var(--border-color);
+    transition: all 0.3s ease;
+    position: relative;
+    overflow: hidden;
+}
+
+.recent-video-placeholder:hover {
+    transform: scale(1.02);
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+    border-color: var(--accent-color);
+}
+
+.recent-video-placeholder img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+/* Плашка "Просмотрено" в левом верхнем углу главного видео */
+.recent-video-placeholder .watched-badge {
+    position: absolute;
+    top: 8px;
+    left: 8px;
+    background-color: rgba(157, 29, 29, 0.9);
+    color: white;
+    padding: 4px 8px;
+    border-radius: 6px;
+    font-size: 12px;
+    font-weight: 600;
+    opacity: 0;
+    transform: scale(0.8);
+    transition: all 0.3s ease;
+    z-index: 10;
+    backdrop-filter: blur(4px);
+}
+
+.recent-video-placeholder.watched .watched-badge {
+    opacity: 1;
+    transform: scale(1);
+}
+
+/* Иконка сердечка в правом верхнем углу главного видео */
+.recent-video-placeholder .favorite-star {
+    position: absolute;
+    top: 8px;
+    right: 8px;
+    font-size: 24px;
+    background-color: rgba(0, 0, 0, 0.7);
+    padding: 6px;
+    border-radius: 50%;
+    color: #fff;
+    opacity: 0.7;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    z-index: 10;
+    width: 36px;
+    height: 36px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    backdrop-filter: blur(4px);
+}
+
+.recent-video-placeholder .favorite-star:hover {
+    opacity: 1;
+    transform: scale(1.1);
+    background-color: rgba(0, 0, 0, 0.8);
+}
+
+.recent-video-placeholder .favorite-star.active {
+    color: var(--accent-color);
+    opacity: 1;
+    background-color: rgba(157, 29, 29, 0.2);
+    border: 2px solid var(--accent-color);
+}
+
+.recent-video-placeholder .favorite-star.active:hover {
+    transform: scale(1.1);
+    box-shadow: 0 0 20px rgba(157, 29, 29, 0.5);
+}
+
+/* Обновляем стили для overlay, чтобы он не перекрывал кнопки */
+.recent-video-placeholder .video-overlay {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background: linear-gradient(transparent, rgba(0,0,0,0.8));
+    padding: 20px;
+    color: white;
+    padding-top: 40px; /* Увеличиваем отступ сверху */
+}
+
+.recent-video-placeholder .video-overlay h3 {
+    margin: 0 0 8px 0;
+    font-size: 16px;
+    font-weight: 600;
+    line-height: 1.3;
+}
+
+.recent-video-placeholder .video-overlay .video-category {
+    margin: 0;
+    font-size: 13px;
+    opacity: 0.8;
+    color: var(--accent-color);
+    font-weight: 500;
+}
+
+.hidden {
+    display: none;
+}
+
+.recent-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 18px;
+}
+
+.recent-table th,
+.recent-table td {
+    padding: 12px 16px;
+    text-align: left;
+    border-bottom: 1px solid var(--border-color);
+}
+
+.recent-table th {
+    font-weight: 500;
+    opacity: 0.8;
+    font-size: 14px;
+}
+
+.back-button {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 10px 14px;
+    background-color: var(--button-color);
+    border-radius: 8px;
+    border: 1px solid var(--border-color);
+    transition: background-color 0.3s ease, box-shadow 0.3s ease, transform 0.2s ease;
+}
+
+.back-button:hover {
+    background-color: var(--hover-color);
+    border: 1px solid var(--accent-color);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    transform: translateX(-2px);
+}
+
+.back-button svg {
+    width: 16px;
+    height: 16px;
+    fill: var(--text-color);
+}
+
+.back-button span {
+    font-weight: 500;
+    color: var(--text-color);
+}
+
+/* Нижняя панель навигации */
+.tab-bar {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: var(--tabbar-height);
+    background-color: var(--panel-color);
+    display: flex;
+    border-top: 1px solid var(--border-color);
+    z-index: 1001;
+    padding: 0 16px;
+    max-width: 600px;
+    margin: 0 auto;
+}
+
+.tab {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 14px;
+    color: #888;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    font-weight: 500;
+    position: relative;
+    border-radius: 10px;
+    margin: 8px 4px;
+}
+
+.tab.active {
+    color: var(--text-color);
+    background-color: var(--button-color);
+}
+
+.tab:hover {
+    background-color: var(--button-hover);
+}
+
+.tab:active {
+    background-color: var(--button-active);
+}
+
+/* Анимации */
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(10px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.view {
+    animation: fadeIn 0.4s ease forwards;
+}
+
+/* Новый стиль для большого видео-плейсхолдера */
+.recent-video-placeholder {
+    width: 100%;
+    aspect-ratio: 16/9;
+    background-color: var(--panel-color);
+    border-radius: 12px;
+    margin-top: 16px;
+    cursor: pointer;
+    border: 1px solid var(--border-color);
+    transition: all 0.3s ease;
+    position: relative;
+    overflow: hidden;
+}
+
+.recent-video-placeholder:hover {
+    transform: scale(1.02);
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+    border-color: var(--accent-color);
+}
+
+.recent-video-placeholder img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+/* Анимация свайпа */
+@keyframes swipeLeft {
+    from {
+        transform: translateX(-30px);
+        opacity: 0;
+    }
+
+    to {
+        transform: translateX(0);
+        opacity: 1;
+    }
+}
+
+@keyframes swipeRight {
+    from {
+        transform: translateX(30px);
+        opacity: 0;
+    }
+
+    to {
+        transform: translateX(0);
+        opacity: 1;
+    }
+}
+
+.swipe-left {
+    animation: swipeLeft 0.3s ease forwards;
+}
+
+.swipe-right {
+    animation: swipeRight 0.3s ease forwards;
+}
+
+/* Стили для страницы просмотра видео */
+.video-view {
+    max-width: 600px;
+    padding: 16px;
+}
+
+.video-player-container {
+    width: 100%;
+    background-color: #000;
+    border-radius: 12px;
+    overflow: hidden;
+    margin-bottom: 16px;
+}
+
+.video-js {
+    width: 100%;
+    height: auto;
+    aspect-ratio: 16/9;
+    max-height: 300px;
+}
+
+.video-info {
+    padding: 0;
+}
+
+.video-title {
+    font-size: 18px;
+    font-weight: 600;
+    margin-bottom: 12px;
+    line-height: 1.4;
+}
+
+.video-stats {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 16px;
+    font-size: 14px;
+    opacity: 0.8;
+}
+
+.video-description-container {
+    border: 1px solid var(--border-color);
+    background-color: var(--panel-color);
+    border-radius: 12px;
+    padding: 16px;
+    margin-top: 16px;
+}
+
+.video-description {
+    background: transparent;
+    border: none;
+    padding: 0;
+    margin-top: 12px;
+    line-height: 1.5;
+    transition: max-height 0.3s ease;
+}
+
+.video-description.collapsed {
+    max-height: 120px;
+    overflow: hidden;
+}
+
+.description-toggle {
+    display: block;
+    margin-top: 8px;
+    color: var(--accent-color);
+    font-size: 14px;
+    cursor: pointer;
+    user-select: none;
+}
+
+.video-actions {
+    display: none;
+}
+
+/* === Обновляем стили для "звездочки" избранного === */
+.favorite-star {
+    position: absolute;
+    top: 8px;
+    right: 8px;
+    font-size: 30px;
+    background-color: var(--panel-color);
+    padding: 8px;
+    border-radius: 50%;
+    color: var(--bg-color);
+    opacity: 0.4;
+    cursor: pointer;
+    transition: color 0.2s ease, opacity 0.2s ease;
+    z-index: 10;
+}
+
+.favorite-star:hover {
+    opacity: 1;
+}
+
+.favorite-star.active {
+    color: var(--accent-color);
+    opacity: 1;
+    background-color: rgba(157, 29, 29, 0.1);
+}
+
+/* Стили для модального окна поиска */
+#search-modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: var(--bg-color);
+    z-index: 1000;
+    padding: 16px;
+    overflow-y: auto;
+    scrollbar-width: thin;
+}
+
+#search-modal::-webkit-scrollbar {
+    width: 6px;
+}
+
+
+.search-header {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 24px;
+    position: sticky;
+    top: 0;
+    background-color: var(--bg-color);
+    padding: 8px 0;
+    z-index: 10;
+}
+
+.search-input-modal {
+    flex: 1;
+    padding: 14px 16px;
+    background-color: var(--search-color);
+    border: 1px solid var(--border-color);
+    border-radius: 12px;
+    color: var(--text-color);
+    font-size: 16px;
+    outline: none;
+}
+
+.close-search {
+    background: none;
+    border: none;
+    color: var(--text-color);
+    cursor: pointer;
+    padding: 8px;
+    opacity: 0.8;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.close-search:hover {
+    opacity: 1;
+}
+
+.close-search svg {
+    width: 24px;
+    height: 24px;
+    fill: currentColor;
+}
+
+.search-tabs {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 24px;
+    flex-wrap: wrap;
+}
+
+.search-tab {
+    padding: 8px 14px;
+    background-color: var(--panel-color);
+    border-radius: 20px;
+    font-size: 14px;
+    cursor: pointer;
+    opacity: 0.7;
+    transition: all 0.2s ease;
+    text-transform: lowercase;
+}
+
+.search-tab.active {
+    opacity: 1;
+    background-color: var(--accent-color);
+    color: white;
+}
+
+.search-results {
+    padding-bottom: 20px;
+}
+
+.search-sorting {
+    margin-bottom: 16px;
+    font-size: 14px;
+    opacity: 0.8;
+    display: flex;
+    gap: 16px;
+}
+
+.sort-option {
+    cursor: pointer;
+    transition: all 0.2s ease;
+    padding: 4px 8px;
+    border-radius: 6px;
+}
+
+.sort-option.active {
+    opacity: 1;
+    color: var(--accent-color);
+    background-color: rgba(157, 29, 29, 0.1);
+}
+
+.sort-option:hover {
+    opacity: 1;
+    background-color: var(--hover-color);
+}
+
+.search-items {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+}
+
+.search-item {
+    background-color: var(--panel-color);
+    border-radius: 12px;
+    padding: 16px;
+    border: 1px solid var(--border-color);
+    margin-right: 4px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.search-item:hover {
+    background-color: var(--hover-color);
+    border-color: var(--accent-color);
+    transform: translateY(-3px);
+    box-shadow: 0 6px 16px rgba(0, 0, 0, 0.2);
+}
+
+.search-item-title {
+    font-weight: 600;
+    margin-bottom: 8px;
+}
+
+.search-item-description {
+    opacity: 0.8;
+    font-size: 14px;
+    margin-bottom: 12px;
+}
+
+.search-item-tag {
+    display: inline-block;
+    padding: 4px 8px;
+    background-color: rgba(157, 29, 29, 0.2);
+    border-radius: 4px;
+    font-size: 12px;
+    color: var(--accent-color);
+}
+
+.no-results {
+    text-align: center;
+    opacity: 0.7;
+    margin-top: 40px;
+}
+
+.community-cards {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    margin-top: 16px;
+}
+
+.community-card {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    padding: 12px 16px;
+    background-color: var(--panel-color);
+    border: 1px solid var(--border-color);
+    border-radius: 8px;
+    cursor: pointer;
+    transition: background-color 0.2s ease;
+    color: var(--text-color);
+}
+
+.community-card:hover {
+    background-color: var(--hover-color);
+}
+
+.support-divider {
+    height: 1px;
+    background-color: var(--border-color);
+    margin: 8px 0;
+}
+
+.community-card svg {
+    width: 18px;
+    height: 18px;
+    flex-shrink: 0;
+    margin-left: 8px;
+    fill: currentColor;
+    transform: rotate(180deg);
+}
+
+.support-content {
+    display: flex;
+    flex-direction: column;
+}
+
+.support-hours {
+    margin-top: 4px;
+    font-size: 13px;
+    opacity: 0.8;
+}
+
+/* Стили для нескольких недавних видео (до 5) */
+.recent-videos-container {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    margin-top: 16px;
+    margin-bottom: 40px; /* Было 24px, увеличиваем для гарантированного отступа снизу */
+    padding-bottom: 16px; /* Добавляем внутренний отступ для защиты от "выползания" */
+}
+
+/* Обновленные стили для recent-video-placeholder, чтобы работать в контейнере */
+.recent-video-placeholder {
+    width: 100%;
+    aspect-ratio: 16/9;
+    background-color: var(--panel-color);
+    border-radius: 12px;
+    cursor: pointer;
+    border: 1px solid var(--border-color);
+    transition: all 0.3s ease;
+    position: relative;
+    overflow: hidden;
+    margin-top: 0; /* Убираем верхний отступ, т.к. gap контролирует расстояние */
+}
+
+/* Вопросы и ответы */
+.faq-item {
+  border-bottom: 1px solid var(--border-color);
+  padding: 12px 0;
+}
+.question {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: var(--panel-color);
+  border-radius: 8px;
+  padding: 12px;
+  margin-bottom: 8px;
+  cursor: pointer;
+  /* hover effect removed */
+}
+.question:hover {
+  color: var(--accent-color);
+}
+.question-title {
+  display: flex;
+  align-items: center;
+}
+.question-badge {
+  display: inline-block;
+  background-color: var(--accent-color);
+  color: #fff;
+  border-radius: 50%;
+  width: 20px;
+  height: 20px;
+  font-size: 12px;
+  text-align: center;
+  line-height: 20px;
+  margin-right: 8px;
+}
+.faq-arrow {
+  width: 16px;
+  height: 16px;
+  fill: currentColor;
+  transition: transform 0.3s ease;
+  transform: rotate(-90deg);
+}
+.faq-arrow.open {
+  transform: rotate(0deg);
+}
+.answer {
+  transform-origin: top;
+  transform: scaleY(0);
+  opacity: 0;
+  /* remove max-height transitions */
+}
+.answer:not(.hidden) {
+  animation: slideDown 0.3s ease forwards;
+}
+
+/* Заголовок вопроса: по умолчанию белый */
+.question .question-title {
+    color: var(--text-color);
+}
+
+/* При нажатии (класс active) — красный */
+.question.active .question-title {
+    color: var(--accent-color);
+}
+
+/* Увеличиваем отступ между кнопкой "Назад" и заголовком в FAQ */
+#faq-view .back-button {
+    margin-bottom: 24px;
+}
+
+/* Адаптивность */
+
+@media (max-width: 600px) {
+    .app-content {
+        padding: 16px;
+        padding-bottom: 16px;
+        min-height: calc(100vh - var(--tabbar-height));
+        min-height: calc(100dvh - var(--tabbar-height));
+    }
+
+    .progress-grid {
+        gap: 12px;
+    }
+
+    .progress-card {
+        padding: 14px;
+    }
+
+    .calendar-container {
+        padding: 12px;
+    }
+
+    .calendar-day {
+        padding: 6px 0;
+    }
+
+    .recent-table th,
+    .recent-table td {
+        padding: 10px 12px;
+    }
+
+    .video-title {
+        font-size: 16px;
+    }
+
+    .video-view {
+        padding: 16px;
+    }
+
+    .video-js {
+        max-height: 250px;
+    }
+
+    .video-title {
+        font-size: 16px;
+    }
+
+    .video-stats {
+        font-size: 13px;
+    }
+
+    .video-description {
+        font-size: 13px;
+    }
+
+    .video-actions {
+        gap: 12px;
+    }
+
+    .favorites-grid {
+        grid-template-columns: 1fr;
+        gap: 12px;
+    }
+
+    #gpt-chat-view {
+        position: fixed !important;
+        left: 0;
+        right: 0;
+        top: 0;
+        bottom: 0;
+        max-width: none;
+        margin: 0;
+        padding-bottom: var(--tabbar-height);
+        height: 100vh;
+        height: 100dvh;
+        display: flex;
+        flex-direction: column;
+    }
+    #gpt-chat-view .chat-input-container {
+        padding-bottom: calc(var(--tabbar-height) + 10px);
+    }
+    .tab-bar {
+        position: fixed !important;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        max-width: none;
+        margin: 0;
+    }
+}
+
+@media (max-width: 400px) {
+    .progress-card {
+        padding: 12px;
+    }
+
+    .progress-title {
+        font-size: 15px;
+    }
+
+    .tag {
+        padding: 6px 12px;
+        font-size: 13px;
+    }
+
+    .calendar-day {
+        font-size: 13px;
+    }
+
+    .video-js {
+        max-height: 200px;
+    }
+
+    .video-title {
+        font-size: 15px;
+    }
+
+    .video-actions {
+        gap: 8px;
+    }
+
+    .video-action {
+        font-size: 11px;
+    }
+
+    .video-action i {
+        font-size: 18px;
+    }
+}
+
+/* Добавляем отступ под кнопкой "Назад" на странице просмотра видео */
+.video-view .back-button {
+    margin-bottom: 16px;
+}
+
+#rules-view .back-button {
+  margin-bottom: 24px;
+}
+
+/* slide-down keyframes */
+@keyframes slideDown {
+  from { transform: scaleY(0); opacity: 0; }
+  to   { transform: scaleY(1); opacity: 1; }
+}
+
+/* FAQ question container as card */
+.question {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: var(--panel-color);
+  border-radius: 8px;
+  padding: 12px;
+  margin-bottom: 8px;
+  cursor: pointer;
+  /* hover effect removed */
+}
+
+/* Badge with number */
+.question-title {
+  display: flex;
+  align-items: center;
+}
+.question-badge {
+  display: inline-block;
+  background-color: var(--accent-color);
+  color: #fff;
+  border-radius: 50%;
+  width: 20px;
+  height: 20px;
+  font-size: 12px;
+  text-align: center;
+  line-height: 20px;
+  margin-right: 8px;
+}
+
+/* Arrow rotation */
+.faq-arrow {
+  width: 16px;
+  height: 16px;
+  fill: currentColor;
+  transition: transform 0.3s ease;
+  transform: rotate(-90deg);
+}
+.faq-arrow.open {
+  transform: rotate(0deg);
+}
+
+/* Answer slide-down */
+.answer {
+  transform-origin: top;
+  transform: scaleY(0);
+  opacity: 0;
+  /* remove max-height transitions */
+}
+.answer:not(.hidden) {
+  animation: slideDown 0.3s ease forwards;
+}
+
+.chat-card {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;    /* вместо space-between */
+}
+
+.chat-avatar {
+  flex-shrink: 0;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background-color: var(--accent-color); /* цвет-заглушка */
+}
+
+.chat-info {
+  flex: 1;
+  margin-left: 12px;
+  text-align: left;               /* текст теперь слева */
+}
+
+.chat-card:hover {
+  background-color: var(--hover-color);
+  transform: scale(1.02);
+}
+
+.chat-description {
+  font-size: 14px;    /* чуть меньше */
+  opacity: 0.7;       /* чуть прозрачнее */
+  margin-top: 4px;
+  color: var(--text-color);
+}
+
+/* Стили для кнопки просмотра видео */
+.watch-button {
+    width: 100%;
+    padding: 16px;
+    background: linear-gradient(135deg, var(--accent-color), #c0392b);
+    color: white;
+    border: none;
+    border-radius: 12px;
+    font-size: 16px;
+    font-weight: 600;
+    cursor: pointer;
+    margin-top: 20px;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 12px rgba(231, 76, 60, 0.3);
+}
+
+.watch-button:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(231, 76, 60, 0.4);
+}
+
+.watch-button:active {
+    transform: translateY(0);
+}
+
+.watch-button.watched {
+    background: linear-gradient(135deg, #27ae60, #2ecc71);
+    box-shadow: 0 4px 12px rgba(39, 174, 96, 0.3);
+}
+
+.watch-button.watched:hover {
+    box-shadow: 0 6px 20px rgba(39, 174, 96, 0.4);
+}
+
+/* Стили для просмотренных видео */
+.favorite-star.watched {
+    background-color: #27ae60;
+    color: white;
+    border-radius: 50%;
+    font-size: 12px;
+    padding: 2px 4px;
+}
+
+.video-thumbnail.watched {
+    opacity: 0.8;
+    border: 2px solid #27ae60;
+}
+
+.video-thumbnail.watched::after {
+    content: '✓ Просмотрено';
+    position: absolute;
+    bottom: 10px;
+    left: 10px;
+    background-color: #27ae60;
+    color: white;
+    padding: 2px 8px;
+    border-radius: 12px;
+    font-size: 11px;
+    font-weight: 500;
+}
+
+/* Анимация для обновления прогресса */
+.progress-fill {
+    transition: width 0.8s ease-out;
+}
+
+.progress-card.updated {
+    animation: progressUpdate 0.6s ease-out;
+}
+
+@keyframes progressUpdate {
+    0% { transform: scale(1); }
+    50% { transform: scale(1.02); box-shadow: 0 8px 20px rgba(var(--accent-color-rgb), 0.3); }
+    100% { transform: scale(1); }
+}
+
+/* Стили для загрузки */
+.loading-placeholder {
+    grid-column: 1 / -1;
+    text-align: center;
+    padding: 40px;
+    color: var(--text-color);
+    opacity: 0.7;
+    font-style: italic;
+}
+
+/* Стили для страницы избранного */
+.favorites-content {
+    min-height: 400px;
+    padding: 0 16px;
+}
+
+.favorites-stats {
+    background-color: var(--panel-color);
+    border-radius: 12px;
+    padding: 16px;
+    margin-bottom: 20px;
+    border: 1px solid var(--border-color);
+    text-align: center;
+}
+
+.favorites-stats h3 {
+    margin: 0 0 8px 0;
+    color: var(--accent-color);
+    font-size: 18px;
+    font-weight: 600;
+}
+
+.favorites-stats p {
+    margin: 0;
+    opacity: 0.8;
+    font-size: 14px;
+}
+
+.favorites-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 16px;
+    margin-top: 20px;
+}
+
+/* Стили для категорийных тегов в избранном */
+.video-category-tag {
+    font-size: 11px;
+    color: var(--accent-color);
+    background-color: rgba(157, 29, 29, 0.15);
+    padding: 3px 8px;
+    border-radius: 6px;
+    margin-top: 8px;
+    display: inline-block;
+    font-weight: 500;
+    border: 1px solid rgba(157, 29, 29, 0.3);
+}
+
+/* Обновленные стили для поиска */
+.search-input-modal:focus {
+    border-color: var(--accent-color);
+    box-shadow: 0 0 0 2px rgba(157, 29, 29, 0.2);
+}
+
+.search-tab:hover {
+    background-color: var(--hover-color);
+    transform: translateY(-1px);
+}
+
+.search-item:hover {
+    background-color: var(--hover-color);
+    border-color: var(--accent-color);
+    transform: translateY(-3px);
+    box-shadow: 0 6px 16px rgba(0, 0, 0, 0.2);
+}
+
+/* Chat Styles */
+#gpt-chat-view {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: var(--tabbar-height); /* Оставляем место для нижней панели */
+    z-index: 1000;
+    display: flex;
+    flex-direction: column;
+    height: calc(100vh - var(--tabbar-height)); /* Высота минус панель навигации */
+    overflow: hidden;
+    background-color: var(--bg-color);
+    max-width: 600px;
+    margin: 0 auto;
+    padding: 0;
+}
+
+/* Важно: скрываем чат, когда он имеет класс hidden */
+#gpt-chat-view.hidden {
+    display: none !important;
+}
+
+.chat-back-button {
+    background-color: var(--accent-color);
+    color: white;
+    margin: 0;
+    border-radius: 8px;
+    padding: 12px 20px;
+    display: inline-flex;
+    align-items: center;
+    gap: 12px;
+    flex-shrink: 0;
+    border: none;
+    cursor: pointer;
+    width: auto;
+    min-width: 0;
+    max-width: 220px;
+    text-align: left;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+    transition: background 0.2s, box-shadow 0.2s;
+}
+
+.chat-back-button span {
+    font-size: 18px;
+    font-weight: 600;
+}
+
+.chat-back-button:hover {
+    background-color: #b52222;
+}
+
+.chat-container {
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+    background-color: var(--panel-color);
+    overflow: hidden;
+    border-radius: 0;
+    margin: 0;
+    border: none;
+    padding: 0;
+}
+
+.chat-header {
+    padding: 0 16px;
+    background-color: var(--panel-color);
+    border-bottom: 1px solid var(--border-color);
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    min-height: 48px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.04);
+}
+
+.chat-actions {
+    display: flex;
+    gap: 8px;
+}
+
+.chat-clear-btn {
+    background: rgba(255, 255, 255, 0.2);
+    border: none;
+    border-radius: 6px;
+    padding: 6px 12px;
+    color: white;
+    font-size: 12px;
+    cursor: pointer;
+    transition: background-color 0.2s;
+}
+
+.chat-clear-btn:hover {
+    background: rgba(255, 255, 255, 0.3);
+}
+
+.chat-messages {
+    flex: 1;
+    overflow-y: auto;
+    overflow-x: hidden;
+    padding: 0 16px 28px 16px; /* Было 0 16px, теперь снизу +28px для времени и последнего сообщения */
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    height: 0; /* Позволяет flex работать правильно */
+    -webkit-overflow-scrolling: touch; /* Плавный скролл на iOS */
+}
+
+.chat-messages::-webkit-scrollbar {
+    width: 4px;
+}
+
+.chat-messages::-webkit-scrollbar-track {
+    background: transparent;
+}
+
+.chat-messages::-webkit-scrollbar-thumb {
+    background: var(--border-color);
+    border-radius: 2px;
+}
+
+.chat-message {
+    display: flex;
+    flex-direction: column;
+    max-width: 80%;
+}
+
+.chat-message.user {
+    align-self: flex-end;
+}
+
+.chat-message.ai {
+    align-self: flex-start;
+}
+
+.message-bubble {
+    padding: 12px 16px;
+    border-radius: 18px;
+    word-wrap: break-word;
+    position: relative;
+}
+
+.chat-message.user .message-bubble {
+    background-color: var(--accent-color);
+    color: white;
+    border-bottom-right-radius: 6px;
+}
+
+.chat-message.ai .message-bubble {
+    background-color: var(--button-color);
+    color: var(--text-color);
+    border-bottom-left-radius: 6px;
+}
+
+.message-time {
+    font-size: 11px;
+    opacity: 0.6;
+    margin-top: 4px;
+    text-align: right;
+}
+
+.chat-message.ai .message-time {
+    text-align: left;
+}
+
+.chat-input-container {
+    padding: 4px 12px 8px 12px;
+    border-top: 1px solid var(--border-color);
+    background-color: var(--panel-color);
+}
+
+.chat-input-wrapper {
+    display: flex;
+    gap: 12px;
+    align-items: flex-end;
+}
+
+.chat-input {
+    flex: 1;
+    padding: 12px 16px;
+    border: 1px solid var(--border-color);
+    border-radius: 20px;
+    background-color: var(--bg-color);
+    color: var(--text-color);
+    font-size: 14px;
+    resize: none;
+    min-height: 44px;
+    max-height: 120px;
+    outline: none;
+    transition: border-color 0.2s;
+    overflow-y: auto;
+}
+
+.chat-input:focus {
+    border-color: var(--accent-color);
+}
+
+.chat-send-btn {
+    background-color: var(--accent-color);
+    border: none;
+    border-radius: 50%;
+    width: 44px;
+    height: 44px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: background-color 0.2s, transform 0.1s;
+    color: white;
+    font-size: 18px;
+}
+
+.chat-send-btn:hover {
+    background-color: #b52222;
+    transform: scale(1.05);
+}
+
+.chat-send-btn:disabled {
+    background-color: var(--button-color);
+    cursor: not-allowed;
+    transform: none;
+}
+
+.chat-loading {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 12px 16px;
+    color: var(--text-color);
+    opacity: 0.7;
+}
+
+.chat-loading-dots {
+    display: flex;
+    gap: 4px;
+}
+
+.chat-loading-dot {
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background-color: var(--accent-color);
+    animation: chatLoading 1.4s infinite ease-in-out;
+}
+
+.chat-loading-dot:nth-child(1) { animation-delay: -0.32s; }
+.chat-loading-dot:nth-child(2) { animation-delay: -0.16s; }
+
+@keyframes chatLoading {
+    0%, 80%, 100% {
+        transform: scale(0.8);
+        opacity: 0.5;
+    }
+    40% {
+        transform: scale(1);
+        opacity: 1;
+    }
+}
+
+.chat-empty {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    flex: 1;
+    text-align: center;
+    color: var(--text-color);
+    opacity: 0.6;
+}
+
+.chat-empty-icon {
+    font-size: 48px;
+    margin-bottom: 16px;
+    opacity: 0.4;
+}
+
+.chat-empty-text {
+    font-size: 16px;
+    margin-bottom: 8px;
+}
+
+.chat-empty-subtitle {
+    font-size: 14px;
+    opacity: 0.7;
+}
+
+/* Responsive chat */
+@media (max-width: 768px) {
+    #gpt-chat-view {
+        /* Наследует фиксированное позиционирование от основного стиля */
+    }
+    
+    .chat-container {
+        /* Убираем все ограничения высоты на мобильных */
+        margin: 0;
+        border-radius: 0;
+    }
+    
+    .chat-back-button {
+        padding: 12px 16px;
+        font-size: 16px;
+    }
+    
+    .chat-header {
+        padding: 8px 16px;
+        min-height: auto;
+    }
+    
+    .chat-messages {
+        padding: 12px 16px;
+        gap: 8px;
+    }
+    
+    .chat-message {
+        max-width: 85%;
+    }
+    
+    .chat-input-container {
+        padding: 12px 16px;
+        border-top: 1px solid var(--border-color);
+    }
+    
+    .chat-input {
+        font-size: 16px; /* Предотвращает зум на iOS */
+    }
+}
+
+/* ================================
+   MARKDOWN ФОРМАТИРОВАНИЕ В ЧАТЕ
+   ================================ */
+
+/* Блоки кода */
+.message-bubble pre {
+    background-color: rgba(0, 0, 0, 0.3);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 8px;
+    padding: 12px;
+    margin: 8px 0;
+    overflow-x: auto;
+    font-family: 'Monaco', 'Consolas', monospace;
+    font-size: 13px;
+    line-height: 1.4;
+}
+
+.message-bubble pre code {
+    background: none;
+    border: none;
+    padding: 0;
+    font-size: inherit;
+    color: inherit;
+}
+
+/* Инлайн код */
+.message-bubble .inline-code {
+    background-color: rgba(0, 0, 0, 0.2);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 4px;
+    padding: 2px 6px;
+    font-family: 'Monaco', 'Consolas', monospace;
+    font-size: 12px;
+    color: #ffd700;
+}
+
+/* Заголовки в чате */
+.message-bubble .chat-heading {
+    font-size: 16px;
+    font-weight: 600;
+    color: var(--accent-color);
+    margin: 12px 0 8px 0;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    padding-bottom: 4px;
+}
+
+.message-bubble .chat-subheading {
+    font-size: 14px;
+    font-weight: 500;
+    color: #ffd700;
+    margin: 10px 0 6px 0;
+}
+
+/* Списки */
+.message-bubble .chat-list {
+    margin: 8px 0;
+    padding-left: 0;
+    list-style: none;
+}
+
+.message-bubble .chat-list-item {
+    position: relative;
+    padding-left: 20px;
+    margin-bottom: 4px;
+    line-height: 1.4;
+}
+
+.message-bubble .chat-list-item:before {
+    content: '•';
+    position: absolute;
+    left: 0;
+    color: var(--accent-color);
+    font-weight: bold;
+    font-size: 16px;
+    line-height: 1.2;
+}
+
+/* Жирный и курсивный текст */
+.message-bubble strong {
+    color: #ffd700;
+    font-weight: 600;
+}
+
+.message-bubble em {
+    font-style: italic;
+    color: #87ceeb;
+}
+
+/* Анимация появления */
+.chat-message {
+    animation: fadeInUp 0.3s ease-out;
+}
+
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(10px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
