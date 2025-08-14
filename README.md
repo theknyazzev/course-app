@@ -1,4 +1,4 @@
-# 🎓 KS Study - Interactive Learning Platform
+# 🎓 Course app - Interactive Learning Platform
 
 > A modern Django-based learning platform with AI-powered chat assistance, real-time progress tracking, and comprehensive video course management.
 
