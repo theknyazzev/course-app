@@ -36,8 +36,7 @@
 
 ### Prerequisites
 - Python 3.12+
-- PostgreSQL 14+
-- Node.js 16+ (for frontend dependencies)
+- PostgreSQL 14+a
 
 ### Installation
 
