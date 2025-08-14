@@ -148,7 +148,7 @@ Update `app/learning_platform/settings.py`:
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'ks_study',
+        'NAME': 'course_app',
         'USER': 'your_user',
         'PASSWORD': 'your_password',
         'HOST': 'localhost',
